@@ -84,6 +84,7 @@ class Xyce(CMakePackage):
     depends_on("fftw~mpi", type=("build", "run"), when="+fftw~mpi")
     depends_on("fftw+mpi", type=("build", "run"), when="+fftw+mpi")
 
+    variant("verbose", default=False, description="Increase Xyce verbosity")
     # https://github.com/Xyce/Xyce/commit/ddec31a9c42c683831937be17fd6ffc3180e77a1
     # requirement because of use of std::filesystem
     conflicts("@7.10:", when="%gcc@:8")
@@ -178,6 +179,13 @@ class Xyce(CMakePackage):
             options.append("-Dpybind11_DIR:PATH={0}".format(pybind11.prefix))
             options.append("-DPython_ROOT_DIR:FILEPATH={0}".format(python.prefix))
             options.append("-DPython_FIND_STRATEGY=LOCATION")
+        if "+verbose" in spec:
+            options.append("-DXyce_VERBOSE_LINEAR=ON")
+            options.append("-DXyce_VERBOSE_NONLINEAR=ON")
+            options.append("-DXyce_VERBOSE_TIME=ON")
+        if "+fftw" in spec:
+            options.append("-DXyce_USE_FFTW=ON")
+            options.append("-DFFTW_ROOT:PATH={0}".format(spec['fftw'].prefix))
 
         return options
 
