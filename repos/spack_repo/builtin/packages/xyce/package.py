@@ -150,6 +150,7 @@ class Xyce(CMakePackage):
     patch(
         "454-cmake-xyce.patch",
         sha256="4d47cd1f10607205e64910ac124c6dd329f1ecbf861416e9da24a1736f2149ff",
+        when="@:7.10",
     )
 
     def cmake_args(self):
