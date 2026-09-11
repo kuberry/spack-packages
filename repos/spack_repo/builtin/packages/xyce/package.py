@@ -185,7 +185,7 @@ class Xyce(CMakePackage):
             options.append("-DXyce_VERBOSE_TIME=ON")
         if "+fftw" in spec:
             options.append("-DXyce_USE_FFTW=ON")
-            options.append("-DFFTW_ROOT:PATH={0}".format(spec['fftw'].prefix))
+            options.append(f"-DFFTW_ROOT:PATH={spec['fftw'].prefix}")
 
         return options
 
