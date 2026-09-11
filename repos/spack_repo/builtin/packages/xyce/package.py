@@ -176,8 +176,8 @@ class Xyce(CMakePackage):
             pybind11 = spec["py-pybind11"]
             python = spec["python"]
             options.append("-DXyce_PYMI:BOOL=ON")
-            options.append("-Dpybind11_DIR:PATH={0}".format(pybind11.prefix))
-            options.append("-DPython_ROOT_DIR:FILEPATH={0}".format(python.prefix))
+            options.append(f"-Dpybind11_DIR:PATH={pybind11.prefix}")
+            options.append(f"-DPython_ROOT_DIR:FILEPATH={python.prefix}")
             options.append("-DPython_FIND_STRATEGY=LOCATION")
         if "+verbose" in spec:
             options.append("-DXyce_VERBOSE_LINEAR=ON")
@@ -206,6 +206,6 @@ class Xyce(CMakePackage):
                     libgfortran = fc("--print-file-name", "libgfortran.a", output=str).strip()
                 # -L<libdir> -lgfortran required for OSX
                 # https://github.com/spack/spack/pull/25823#issuecomment-917231118
-                flags.append("-L{0} -lgfortran".format(os.path.dirname(libgfortran)))
+                flags.append(f"-L{os.path.dirname(libgfortran)} -lgfortran")
 
         return (flags, None, None)
